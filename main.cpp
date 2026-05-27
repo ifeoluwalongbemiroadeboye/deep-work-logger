@@ -36,7 +36,7 @@ int main() {
     std::cout << "[" << log.size() << " past sessions loaded from file]\n";
 
     do {
-        std::cout << "\n1. Log a Session\n2. View Log\n3. Exit\n";
+        std::cout << "\n1. Log a Session\n2. View Log\n3. Exit\n4. Clear All Logs\n";
         std::cout << "Choose an option: ";
         std::cin >> choice;
 
@@ -76,6 +76,24 @@ int main() {
                 totalTime += log[i].durationMinutes;
             }
             std::cout << "Total deep work: " << totalTime << " mins\n";
+        } else if (choice == 4) {
+            char confirmation;
+            std::cout << "Are you sure you want to clear all logs? (y/n): ";
+            std::cin >> confirmation;
+
+            if (confirmation == 'y' || confirmation == 'Y') {
+                log.clear();
+
+                std::ofstream outFile(filename, std::ios::trunc);
+                if (outFile.is_open()) {
+                    outFile.close();
+                    std::cout << "All logs cleared successfully.\n";
+                } else {
+                    std::cout << "Error: Could not open file to clear logs.\n";
+                }
+            } else {
+                std::cout << "Clear logs canceled.\n";
+            }
         }
 
     } while (choice != 3);
